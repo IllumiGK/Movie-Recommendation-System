@@ -44,6 +44,7 @@ def get_recommendations_with_demographics(user_id, num_recommendations=5):
     
     recommendations = recommendations.sort_values(ascending=False)
     return recommendations.head(num_recommendations)
+    
 
 @app.route('/recommend', methods=['GET', 'POST'])
 def recommend():
@@ -51,10 +52,15 @@ def recommend():
         try:
             user_id = int(request.form['user_id'])
             recommendations = get_recommendations_with_demographics(user_id)
+
+            recommendations = list(recommendations.items())
+            
             return render_template('index.html', recommendations=recommendations)
+            
         except Exception as e:
             app.logger.error(f"Error: {e}")
             return render_template('index.html', recommendations=None)
+            
     elif request.method == 'GET':
         return render_template('index.html', recommendations=None)
 
@@ -151,4 +157,5 @@ combined_similarity_df = pd.DataFrame(combined_similarity, index=user_item_matri
 
 
 if __name__ == '__main__':
+
     app.run(debug=True)
