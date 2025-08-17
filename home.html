@@ -27,6 +27,7 @@
         .banner {
             width: 100%;
             height: 100vh;
+            position: relative;
         }
 
         .navbar {
@@ -73,9 +74,9 @@
 
         .container {
             width: 800px;
-            height: 200px;
+            height: auto;
             position: absolute;
-            top: 25%;
+            top: 20%;
             left: 10px;
             padding-left: 4.5rem;
             text-align: left;
@@ -96,6 +97,17 @@
             font-size: 1.5rem;
         }
 
+        .home-neon-letters {
+            display: flex;
+            gap: 5px;
+            margin-top: 30px;
+        }
+
+        .home-neon-letters img {
+            width: 60px;
+            height: auto;
+        }
+
         .extra-container {
             height: 2000px;
             color: #fff;
@@ -103,7 +115,6 @@
             padding: 2rem;
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -116,13 +127,6 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
-        }
-
-        img {
-            max-width: 100%;
-            display: inline-block;
-            vertical-align: middle;
-            border: 0;
         }
 
         .footer {
@@ -146,14 +150,22 @@
         </div>
 
         <div class="container">
-            <h1>Welcome to Serenity</h1>
-            <p>This is the index page. Explore movies, check recommendations, and enjoy the experience of Serenity Movies.</p>
+            <h1>Look Around</h1>
+            <p>Here you can find user recommended movies. 
+               For those nights when you really can't find anything to watch..</p>
+
+            <!-- Restored Neon Letters -->
+            <div class="home-neon-letters">
+                <img src="\static\neon1.png" loading="lazy" child="first" alt="" class="home_header-letter-image">
+                <img src="\static\neon2.png" loading="lazy" child="second" alt="" class="home_header-letter-image">
+                <img src="\static\neon3.png" loading="lazy" child="third" alt="" class="home_header-letter-image">
+            </div>
         </div>
     </div>
 
     <div class="extra-container">
         <h2>Additional Content</h2>
-        <p>This is the extra container underneath the main content. Add more content here as needed for the index page.</p>
+        <p>This is the extra container underneath the main content. Add more content here as needed for the home page.</p>
     </div>
 
     <div class="footer">
@@ -161,3 +173,5 @@
     </div>
 </body>
 </html>
+
+
