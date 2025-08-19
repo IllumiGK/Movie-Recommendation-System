@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Recommendations</title>
+    <title>Serenity - Recommendations</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         html, body {
             height: 100%;
             margin: 0;
-            font-family: 'Ppobjectsans', sans-serif;
-            font-size: 1rem;
-            line-height: 1.5;
-            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('/static/newbg.jpg') repeat;
+            padding: 0;
+            font-family: sans-serif;
+            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('/static/newbg.jpg');
+            background-size: cover;
+            position: relative;
+            background-position: 0 0;
             background-size: 100px 100px;
+            font-family: Ppobjectsans, sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
         }
-
         .banner {
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
             position: relative;
         }
-
         .navbar {
             width: 90%;
             margin: auto;
@@ -31,30 +35,23 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .logo {
             width: 190px;
             cursor: pointer;
         }
-
         .navbar ul {
             list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
+            display: inline-flex;
         }
-
         .navbar ul li {
             margin: 0 20px;
             position: relative;
         }
-
         .navbar ul li a {
             text-decoration: none;
             color: #fff;
             text-transform: uppercase;
         }
-
         .navbar ul li::after {
             content: '';
             height: 3px;
@@ -65,11 +62,9 @@
             bottom: -10px;
             transition: 0.5s;
         }
-
         .navbar ul li:hover::after {
             width: 100%;
         }
-
         .container {
             width: 800px;
             height: 200px;
@@ -83,45 +78,37 @@
             text-align: left;
             color: #fff;
         }
-
         .container h1 {
             font-size: 3rem;
             margin-top: 80px;
             font-weight: 600;
             line-height: 1.16667;
         }
-
         .form-group label {
             color: #f5f5f5;
         }
-
         .btn-primary {
             background-color: #ff4500;
             border: none;
         }
-
         .btn-primary:hover {
             background-color: #e63e00;
         }
-
         .list-group-item {
             background-color: #333;
             border: none;
             color: #f5f5f5;
         }
-
         .alert-warning {
             background-color: #ffcc00;
             color: #1b1b1b;
         }
-
         .extra-container {
             height: 2000px;
             background-color: transparent;
             color: #fff;
             padding: 2rem;
         }
-
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -135,7 +122,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-        
         .list-group-item {
             background-color: #333;
             border: none;
@@ -144,19 +130,44 @@
             transform: translateY(20px);
             transition: all 0.5s ease;
         }
-
         .list-group-item.show {
             opacity: 1;
             transform: translateY(0);
         }
-        
+        .home-neon-letters {
+            top: 15%;
+            right: 20%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 20rem;
+            position: absolute;
+        }
+        .home-header-letter-image {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0%;
+            bottom: 0%;
+            left: 0%;
+            right: 0%;
+        }
+        img {
+            max-width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+            border: 0;
+            overflow-clip-margin: content-box;
+            overflow: clip;
+
+        }
         footer {
             text-align: center;
             padding: 1rem;
             background-color: #222;
             color: #fff;
         }
-
     </style>
 </head>
 <body>
@@ -170,37 +181,39 @@
                 <li><a href="#">Login</a></li>
             </ul>
         </nav>
-
-        <main class="container">
-            <h1>Movie Recommendations</h1>
-            <form action="{{ url_for('recommend') }}" method="post">
-                <div class="form-group">
-                    <label for="user_id">Enter User ID:</label>
-                    <input type="text" id="user_id" name="user_id" class="form-control" placeholder="User ID" size="4">
-                </div>
-                <button type="submit" class="btn btn-primary">Get Recommendations</button>
-            </form>
-
-            {% if recommendations is not none %}
-                {% if recommendations|length > 0 %}
-                    <h2 class="mt-4" style="color:white;">Recommendations:</h2>
-                    <ul class="list-group">
-                        {% for movie, rating in recommendations.items() %}
-                            <li class="list-group-item">{{ movie }} - Rating: {{ rating }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="alert alert-warning mt-4">No recommendations available.</p>
-                {% endif %}
-            {% endif %}
-        </main>
     </header>
+    <div class="home-neon-letters">
+        <img src="\static\neon1.png" loading="lazy" child="first" alt="" class="home_header-letter-image">
+        <img src="\static\neon2.png" loading="lazy" child="second" alt="" class="home_header-letter-image">
+        <img src="\static\neon3.png" loading="lazy" child="third" alt="" class="home_header-letter-image">
+    </div>
+    <main class="container">
+        <h1>Movie Recommendations</h1>
+        <form action="{{ url_for('recommend') }}" method="post">
+            <div class="form-group">
+                <label for="user_id">Enter User ID:</label>
+                <input type="text" id="user_id" name="user_id" class="form-control" placeholder="User ID" size="4">
+            </div>
+            <button type="submit" class="btn btn-primary">Get Recommendations</button>
+        </form>
 
+        {% if recommendations is not none %}
+            {% if recommendations|length > 0 %}
+                <h2 class="mt-4" style="color:white;">Recommendations:</h2>
+                <ul class="list-group">
+                    {% for movie, rating in recommendations.items() %}
+                        <li class="list-group-item">{{ movie }} - Rating: {{ rating }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="alert alert-warning mt-4">No recommendations available.</p>
+            {% endif %}
+        {% endif %}
+    </main>
     <section class="extra-container">
         <h2>Additional Content</h2>
         <p>This is the extra container underneath the main content. Add more content here as needed.</p>
     </section>
-
     <footer>
         <p>Footer Content</p>
     </footer>
@@ -220,9 +233,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
