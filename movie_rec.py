@@ -148,6 +148,32 @@ beta = 0.3
 combined_similarity = alpha * ratings_similarity_normalised + beta * demographic_similarity_normalised
 combined_similarity_df = pd.DataFrame(combined_similarity, index=user_item_matrix.index, columns=user_item_matrix.index)
 
+# Evaluate model accuracy
+train, test = train_test_split(ratings, test_size=0.2, random_state=42)
+
+train_matrix = train.pivot(index='user_id', columns='item_id', values='rating')
+test_matrix = test.pivot(index='user_id', columns='item_id', values='rating')
+
+# Fill NaNs with user mean
+user_mean = train_matrix.mean(axis=1)
+train_matrix_filled = train_matrix.apply(lambda row: row.fillna(user_mean[row.name]), axis=1)
+
+# Flatten matrices and align test/train
+common_users = train_matrix_filled.index.intersection(test_matrix.index)
+common_movies = train_matrix_filled.columns.intersection(test_matrix.columns)
+y_true = test_matrix.loc[common_users, common_movies].values.flatten()
+y_pred = train_matrix_filled.loc[common_users, common_movies].values.flatten()
+
+# Remove NaNs from y_true
+mask = ~np.isnan(y_true)
+y_true = y_true[mask]
+y_pred = y_pred[mask]
+
+rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+mae = mean_absolute_error(y_true, y_pred)
+
+print(f"RMSE: {rmse:.3f}, MAE: {mae:.3f}")
+
 # Print results
 #recommendations = get_recommendations_with_demographics(user_id)
 #print(f"Recommendations for User {user_id} including demographics:\n{recommendations}")
@@ -159,3 +185,4 @@ combined_similarity_df = pd.DataFrame(combined_similarity, index=user_item_matri
 if __name__ == '__main__':
 
     app.run(debug=True)
+
