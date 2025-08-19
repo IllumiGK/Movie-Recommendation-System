@@ -7,6 +7,18 @@ Dataset:
 
 The Movielens 100k dataset contains 1,682 movies and user ratings, with each user rating 20 movies. Demographic information recorded includes age, gender, and occupation.
 
+Tech Stack / Tools Used:
+
+  -  Python – Data processing and recommendation system logic
+
+  -  Pandas & NumPy – Data manipulation and numerical computations
+
+  -  Scikit-learn – Cosine similarity & Euclidean distance calculations
+
+  -  Flask – Web app backend to integrate Python code with frontend
+
+  -  HTML & CSS – Web app frontend design
+
 Methodology:
 
 User Ratings -
