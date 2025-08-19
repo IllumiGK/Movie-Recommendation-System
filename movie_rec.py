@@ -94,9 +94,6 @@ def get_similar_users_info(user_id):
      
     print(wc.items())
 
-def rmse(pred, actual):
-    return np.sqrt(mean_squared_error(pred, actual))
-
 
 
 # user_id = int(input('Enter your UserID number: '))
@@ -185,4 +182,5 @@ print(f"RMSE: {rmse:.3f}, MAE: {mae:.3f}")
 if __name__ == '__main__':
 
     app.run(debug=True)
+
 
