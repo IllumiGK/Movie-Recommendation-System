@@ -2,9 +2,10 @@ from flask import Flask, request, render_template
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 from collections import Counter
 from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.model_selection import train_test_split
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 
@@ -26,6 +27,10 @@ def get_recommendations(user_id, num_recommendations=5):
     
     recommendations = recommendations.sort_values(ascending=False)
     return recommendations.head(num_recommendations)
+
+
+
+
 def get_recommendations_with_demographics(user_id, num_recommendations=5):
     # Finds the movies the most similar users to 'user_id' rated and adds them to recommendation table (excluding those that werent rated by the users), groups them alphabetically and sorts them from most highly rated to least and then returns the sorted table.
     similar_users = combined_similarity_df[user_id].sort_values(ascending=False).index[1:num_recommendations+1]
@@ -46,6 +51,8 @@ def get_recommendations_with_demographics(user_id, num_recommendations=5):
     return recommendations.head(num_recommendations)
     
 
+
+
 @app.route('/recommend', methods=['GET', 'POST'])
 def recommend():
     if request.method == 'POST':
@@ -53,7 +60,7 @@ def recommend():
             user_id = int(request.form['user_id'])
             recommendations = get_recommendations_with_demographics(user_id)
 
-            recommendations = list(recommendations.items())
+            recommendations = dict(recommendations.items())
             
             return render_template('index.html', recommendations=recommendations)
             
@@ -65,9 +72,13 @@ def recommend():
         return render_template('index.html', recommendations=None)
 
 
+
+
 @app.route('/')
 def home():
     return render_template('home.html', recommendations = None)
+
+
 
 # Get all info for all the similar users and put them into sorted lists
 def get_similar_users_info(user_id):
@@ -93,6 +104,8 @@ def get_similar_users_info(user_id):
     s = max(wc.values())
      
     print(wc.items())
+
+
 
 
 
@@ -171,6 +184,7 @@ mae = mean_absolute_error(y_true, y_pred)
 
 print(f"RMSE: {rmse:.3f}, MAE: {mae:.3f}")
 
+
 # Print results
 #recommendations = get_recommendations_with_demographics(user_id)
 #print(f"Recommendations for User {user_id} including demographics:\n{recommendations}")
@@ -182,5 +196,3 @@ print(f"RMSE: {rmse:.3f}, MAE: {mae:.3f}")
 if __name__ == '__main__':
 
     app.run(debug=True)
-
-
